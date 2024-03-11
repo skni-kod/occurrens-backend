@@ -7,7 +7,7 @@
         public TimeOnly? Time { get; set; }
         public string Description { get; set; }
         public bool Is_estabilished { get; set; } = false;
-        public float? price { get; set; }
+        public float? Price { get; set; }
 
 
         public Guid? DoctorId { get; set; }

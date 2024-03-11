@@ -1,4 +1,4 @@
-using Application.Contracts.Appointment.Patients.Responses;
+using Application.Contracts.AppointmentAnswer.Patients.Responses;
 using ErrorOr;
 using MediatR;
 

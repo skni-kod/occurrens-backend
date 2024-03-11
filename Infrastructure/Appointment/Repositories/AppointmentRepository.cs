@@ -1,3 +1,4 @@
+using Core.Appointment.DTOS;
 using Core.Appointment.Repositories;
 using Infrastructure.Persistance;
 using Microsoft.EntityFrameworkCore;
@@ -23,5 +24,21 @@ public class AppointmentRepository : IAppointmentRepository
     {
         await _context.Visits.AddAsync(visit,cancellationToken);
         await _context.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task<bool> SetDateOfVisit(Guid doctorId, Guid visitId, SetVisitInfoDto dto, CancellationToken cancellationToken)
+    {
+        var visit = await _context.Visits.FindAsync(visitId, cancellationToken);
+
+        if (visit is null || visit.DoctorId != doctorId) return false;
+
+        visit.Date = dto.Date;
+        visit.Time = dto.Time;
+        visit.Price = dto.Price;
+        visit.Is_estabilished = true;
+
+        await _context.SaveChangesAsync(cancellationToken);
+
+        return true;
     }
 }

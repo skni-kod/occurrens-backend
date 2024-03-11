@@ -10,5 +10,10 @@ public static partial class Errors
             code: "Doctor doesnt exist",
             description: "Wybrany lekarz nie istnieje!"
             );
+
+        public static Error HasNoAccess => Error.Conflict(
+            code: "Doctor has not access",
+            description: "Należy wybrać poprawną wizytę!"
+            );
     }
 }

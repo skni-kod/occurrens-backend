@@ -1,5 +1,5 @@
 using Application.Common.Errors;
-using Application.Contracts.Appointment.Patients.Responses;
+using Application.Contracts.AppointmentAnswer.Patients.Responses;
 using Core.Appointment.Repositories;
 using Core.DataFromClaims.UserId;
 using ErrorOr;
