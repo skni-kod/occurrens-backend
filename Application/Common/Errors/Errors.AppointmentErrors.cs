@@ -15,5 +15,10 @@ public static partial class Errors
             code: "Doctor has not access",
             description: "Należy wybrać poprawną wizytę!"
             );
+        
+        public static Error NothingToDispaly => Error.Conflict(
+            code: "NothingToDisplay",
+            description: "Wszystkie wizyty są przydzielone!"
+            );
     }
 }

@@ -1,4 +1,5 @@
 using Core.Appointment.DTOS;
+using Core.Appointment.Extensions;
 using Core.Appointment.Repositories;
 using Infrastructure.Persistance;
 using Microsoft.EntityFrameworkCore;
@@ -40,5 +41,17 @@ public class AppointmentRepository : IAppointmentRepository
         await _context.SaveChangesAsync(cancellationToken);
 
         return true;
+    }
+
+    public async Task<List<UndeterminedVisitsDto>> GetUndeterminedVisits(Guid doctorId, CancellationToken cancellationToken)
+    {
+        var visits = await _context.Visits.Where(x => x.DoctorId == doctorId && !x.Is_estabilished)
+            .ToListAsync(cancellationToken);
+
+        if (visits is null) return null;
+
+        var result = visits.Select(x => x.UndeterminedVisitsAsDto()).ToList();
+
+        return result;
     }
 }

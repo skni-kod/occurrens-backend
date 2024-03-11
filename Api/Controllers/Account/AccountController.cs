@@ -9,7 +9,7 @@ using Core.Account.enums;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Api.Controllers;
+namespace Api.Controllers.Account;
 
 [Route("account")]
 public class AccountController : ApiController

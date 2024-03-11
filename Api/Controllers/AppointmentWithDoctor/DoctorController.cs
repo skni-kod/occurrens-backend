@@ -1,4 +1,5 @@
 using Application.Appointment.Doctors.Commands.SetDateAndCostVisit;
+using Application.Appointment.Doctors.Queries.DisplayUndeterminedVisits;
 using Core.Account.enums;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -26,6 +27,23 @@ public class DoctorController : ApiController
     public async Task<IActionResult> SetDateAndCostOfVisit([FromBody] SetDateAndCostOfVisitCommand command)
     {
         var request = await _mediator.Send(command);
+
+        return request.Match(
+            response => Ok(response),
+            errors => Problem(errors)
+            );
+    }
+
+    /// <summary>
+    /// Display all visits undetermined
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet]
+    public async Task<IActionResult> GetUndeterminedVisits()
+    {
+        var query = new DisplayUndeterminedVisitsQuery();
+
+        var request = await _mediator.Send(query);
 
         return request.Match(
             response => Ok(response),

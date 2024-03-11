@@ -8,4 +8,5 @@ public interface IAppointmentRepository
     Task<bool> IsDoctorExist(Guid doctorId, CancellationToken cancellationToken);
     Task MakeAppointmentWithDoctor(Visit visit, CancellationToken cancellationToken);
     Task<bool> SetDateOfVisit(Guid doctorId, Guid visitId, SetVisitInfoDto dto, CancellationToken cancellationToken);
+    Task<List<UndeterminedVisitsDto>> GetUndeterminedVisits(Guid doctorId, CancellationToken cancellationToken);
 }
