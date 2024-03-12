@@ -11,11 +11,11 @@ namespace Api.Controllers.Disease;
 
 [Route("disease")]
 [Authorize(Roles = nameof(UserRoles.Doctor))]
-public class DiseasesController : ApiController
+public class DoctorDiseasesController : ApiController
 {
     private readonly IMediator _mediator;
 
-    public DiseasesController(IMediator mediator)
+    public DoctorDiseasesController(IMediator mediator)
     {
         _mediator = mediator;
     }
