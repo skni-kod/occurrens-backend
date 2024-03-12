@@ -1,6 +1,7 @@
 using Core.Appointment.DTOS;
 using Core.Appointment.Extensions;
 using Core.Appointment.Repositories;
+using Core.Date;
 using Infrastructure.Persistance;
 using Microsoft.EntityFrameworkCore;
 using occurrensBackend.Entities.DatabaseEntities;
@@ -10,10 +11,12 @@ namespace Infrastructure.Appointment.Repositories;
 public class AppointmentRepository : IAppointmentRepository
 {
     private readonly OccurrensDbContext _context;
+    private readonly IDateService _dateService;
 
-    public AppointmentRepository(OccurrensDbContext context)
+    public AppointmentRepository(OccurrensDbContext context, IDateService dateService)
     {
         _context = context;
+        _dateService = dateService;
     }
 
     public async Task<bool> IsDoctorExist(Guid doctorId, CancellationToken cancellationToken)
@@ -53,5 +56,17 @@ public class AppointmentRepository : IAppointmentRepository
         var result = visits.Select(x => x.UndeterminedVisitsAsDto()).ToList();
 
         return result;
+    }
+
+    public async Task<List<DisplayVisitInfoDto>> GetAllVisits(Guid patientId, CancellationToken cancellationToken)
+    {
+        var visits = await _context.Visits.Where(x => x.PatientId == patientId && 
+                                                      x.Is_estabilished && 
+                                                      x.Date >= _dateService.CurrentDate())
+            .ToListAsync(cancellationToken);
+
+        if (visits is null) return null;
+
+        return visits.Select(x => x.DisplayVisitInfoAsDto()).ToList();
     }
 }

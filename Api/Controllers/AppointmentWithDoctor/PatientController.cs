@@ -1,4 +1,5 @@
 using Application.Appointment.Patients.Commands.AppointmentToDoctor;
+using Application.Appointment.Patients.Queries.GetAllVisits;
 using Core.Account.enums;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -30,6 +31,23 @@ public class PatientController : ApiController
         return response.Match(
             messageResponse => Ok(messageResponse),
             erros => Problem(erros)
+            );
+    }
+
+    /// <summary>
+    /// Display unstarted visits
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet]
+    public async Task<IActionResult> GetAllVisits()
+    {
+        var query = new GetAllVisitsQuery();
+
+        var response = await _mediator.Send(query);
+
+        return response.Match(
+            visitsResponse => Ok(visitsResponse),
+            errors => Problem(errors)
             );
     }
 }

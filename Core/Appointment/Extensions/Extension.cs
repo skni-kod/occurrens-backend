@@ -13,4 +13,16 @@ public static class Extension
             Description = visit.Description
         };
     }
+
+    public static DisplayVisitInfoDto DisplayVisitInfoAsDto(this Visit visit)
+    {
+        return new DisplayVisitInfoDto
+        {
+            Id = visit.Id,
+            Date = (DateOnly)visit.Date,
+            Time = (TimeOnly)visit.Time,
+            Description = visit.Description,
+            Price = (float)visit.Price
+        };
+    }
 }
