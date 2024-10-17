@@ -48,8 +48,12 @@ public class ExceptionFilter : IExceptionFilter
                 break;
             
             default:
-                _logger.LogError(context.Exception, "Not supported error");
-                result = JsonSerializer.Serialize(new { error = "Somethink went wrong!" });
+                _logger.LogError(context.Exception, "An internal server error occurred.");
+                result = JsonSerializer.Serialize(new 
+                { 
+                    error = "Something went wrong!", 
+                    details = context.Exception.ToString() // Add error details for internal errors
+                });
                 break;
         }
         
